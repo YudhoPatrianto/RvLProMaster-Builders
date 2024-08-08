@@ -44,11 +44,27 @@ on:
         required: true
         type: choice
         options:
-            - '8'
-            - '9'
             - '10'
             - '11'
             - '12'
+            - '13'
+            - '14'
+            - '15'
+            - '16'
+            - '17'
+            - '18'
+            - '19'
+            - '20'
+            - '21'
+            - '22'
+            - '23'
+            - '24'
+            - '25'
+            - '26'
+            - '27'
+            - '28'
+            - '29'
+            - '30'
       INPUT_SIZE_SWAP:
         description: 'Select Your Want Swap'
         required: true
@@ -73,8 +89,7 @@ jobs:
         DT_BRANCH: ${{ inputs.DT_RECOVERY_BRANCH }}
         PBRP_ANDROID_12_URL: "https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1"
         TWRP_TWRP_12_URL: "https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1"
-        CCACHE_DIR: ~/.ccache
-        CCACHE_MAXSIZE: ${{ inputs.CCACHE_SIZE_INPUT }}G
+
     permissions:
         contents: write
     steps:
@@ -97,18 +112,13 @@ jobs:
         with:
             swap-size-gb: ${{ inputs.INPUT_SIZE_SWAP }}
 
-      - name: Setting ccache
-        uses: actions/cache@v3
-        with:
-            path: ~/.ccache
-            key: ${{ runner.os }}-ccache-${{ github.sha }}
-            restore-keys: |
-              ${{ runner.os }}-ccache
-
-      - name: Apply CCACHE
+      - name: Configuring Ccache
         run: |
-          export PATH="/usr/lib/ccache:$PATH"
-          
+          export USE_CCACHE=1
+          export CC='ccache gcc'
+          export CXX='ccache g++'
+          ccache -M ${{ inputs.INPUT_SIZE_CCACHE }}G
+
       - name: Display System Information
         run: |
           echo "OS: $(lsb_release -a 2>/dev/null | awk '/Description/ {print $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}')"
