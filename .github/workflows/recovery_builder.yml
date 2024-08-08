@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: "Building Recovery"
+    name: "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,4 +22,4 @@ jobs:
 
       - name: Set up environment
         run: |
-          e
+          echo "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
