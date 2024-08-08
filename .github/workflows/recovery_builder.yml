@@ -18,10 +18,16 @@ on:
         type: choice
         options:
             - xiaomi
-            
-
-    
-
+      BUILD_VARIANT:
+        description: 'Select Your Build Variant'
+        required: true
+        default: bootimage
+        type: choice
+        options:
+            - bootimage
+            - recovery
+            - vendor_boot
+            - pbrp
 jobs:
   build:
     name: "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
@@ -34,3 +40,5 @@ jobs:
         run: |
           echo "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
           echo "Brands: ${{ inputs.SELECT_BRAND }}"
+          echo "Build Variant: ${{ inputs.BUILD_VARIANT }}"
+
