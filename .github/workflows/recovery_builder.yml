@@ -170,6 +170,12 @@ jobs:
           lunch ${{ inputs.MAKEFILE_DT }}_${{ env.DEVICE_CODENAME }}-eng
           mka ${{ env.BUILD_VAR }} -j$(nproc)
           fi
+      
+      - name: See Builds Files
+        run: |
+          cd buildir/out/target/product/${{ env.DEVICE_CODENAME }}
+          ls -l
+          
 
       - name: Uploading Into Releases
         uses: softprops/action-gh-release@master
