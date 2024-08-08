@@ -28,6 +28,15 @@ on:
             - recovery
             - vendor_boot
             - pbrp
+      CODENAME:
+        description: 'Insert Your device codename'
+        required: true
+      DT_RECOVERY_URL:
+        description: "Insert Your Device Tree URL In Here"
+      DT_RECOVERY_BRANCH:
+        description: "Insert Your Device Tree Branch In Here"
+        required: true
+
 jobs:
   build:
     name: "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
@@ -36,9 +45,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up environment
+      - name: Display All Information
         run: |
           echo "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
           echo "Brands: ${{ inputs.SELECT_BRAND }}"
           echo "Build Variant: ${{ inputs.BUILD_VARIANT }}"
+          echo "Device Tree URL: ${{ inputs.DT_RECOVERY_URL }}"
+          echo "Device Tree Branch: ${{ inputs.DT_RECOVERY_BRANCH }}"
 
