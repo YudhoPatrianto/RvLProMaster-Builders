@@ -53,3 +53,13 @@ jobs:
           echo "Device Tree URL: ${{ inputs.DT_RECOVERY_URL }}"
           echo "Device Tree Branch: ${{ inputs.DT_RECOVERY_BRANCH }}"
 
+      - name: Display System Information
+        run: |
+          echo "OS: $(lsb_release -a 2>/dev/null | awk '/Description/ {print $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}')"
+          echo "Users $(whoami)"
+          echo "Kernel Version: $(uname -r)"
+          echo "CPU: $(lscpu | grep 'Model name' | awk -F: '{print $2}' | xargs)"
+          echo "CPU Cores: $(nproc --all) Cores"
+          echo "Total Memory Size: $(free -h | awk '/^Mem:/ {print $4}')"
+          echo "Total Swap Size: $(free -h | awk '/^Swap:/ {print $2}')"
+          echo "Total Free Disk: $(df -h $(pwd) | awk 'NR==2 {print $4}')"
