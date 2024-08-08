@@ -115,7 +115,7 @@ jobs:
           cd RvLProMaster-Builder
 
           # Condition PBRP
-          if [[ ${{ env.SELECTED_RECOVERY }} == *"PBRP(Android-12.1)"* ]]; then
+          if [[ "${{ env.SELECTED_RECOVERY }}" == *"PBRP(Android-12.1)"* ]]; then
           repo init -u ${{ env.PBRP_ANDROID_12_URL }}
           repo sync --force-sync --no-clone-bundle -j$(nproc)
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
@@ -125,7 +125,7 @@ jobs:
           mka ${{ env.BUILD_VAR }} -j$(nproc)
 
           # Condition TWRP
-          elif [[ ${{ env.SELECTED_RECOVERY }} == *"TWRP(twrp-12.1)"* ]]; then
+          elif [[ "${{ env.SELECTED_RECOVERY }}" == *"TWRP(twrp-12.1)"* ]]; then
           repo init -u ${{ env.TWRP_TWRP_12_URL }}
           repo sync --force-sync --no-clone-bundle -j$(nproc)
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
