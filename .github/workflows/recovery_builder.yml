@@ -1,26 +1,25 @@
 name: Recovery Builder
 
 on:
-    workflow_dispatch:
-        input:
-            SELECT_RECOVERY:
-                description: 'Please choose the custom recovery you want to build'
-                required: true
-                default: PBRP(Android-12.1)
-                type: choice
-                options:
-                    - PBRP(Android-12.1)
-                    - TWRP(twrp-12.1)
+  workflow_dispatch:
+    inputs:
+      SELECT_RECOVERY:
+        description: 'Please choose the custom recovery you want to build'
+        required: true
+        default: PBRP(Android-12.1)
+        type: choice
+        options:
+          - PBRP(Android-12.1)
+          - TWRP(twrp-12.1)
 
 jobs:
-    build:
-        name: "Building Recovery"
-        runs-on: debian:latest
-        env:
-            GITHUB_TOKEN:
-        permission:
-            contents: write
-        steps:
-            - name: Test Output
-            run: |
-                echo "Hi"
+  build:
+    name: "Building Recovery"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up environment
+        run: |
+          e
