@@ -11,6 +11,16 @@ on:
         options:
           - PBRP(Android-12.1)
           - TWRP(twrp-12.1)
+      SELECT_BRAND:
+        description: 'Select your device brand'
+        required: true
+        default: xiaomi
+        type: choice
+        options:
+            - xiaomi
+            
+
+    
 
 jobs:
   build:
@@ -23,3 +33,4 @@ jobs:
       - name: Set up environment
         run: |
           echo "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
+          echo "Brands: ${{ inputs.SELECT_BRAND }}"
