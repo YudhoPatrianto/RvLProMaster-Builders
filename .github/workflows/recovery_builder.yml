@@ -130,7 +130,8 @@ jobs:
           repo sync --force-sync --no-clone-bundle -j$(nproc)
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
           source build/envsetup.sh
-          cd buildir
+          echo $(pwd)
+          #cd $(pwd)buildir
           lunch ${{ inputs.MAKEFILE_DT }}_${{ env.DEVICE_CODENAME }}-eng
           mka ${{ env.BUILD_VAR }} -j$(nproc)
           fi
