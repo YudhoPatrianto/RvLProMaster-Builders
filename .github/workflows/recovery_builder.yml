@@ -111,8 +111,8 @@ jobs:
 
       - name: Sync Recovery
         run: |
-          mkdir -p RvLProMaster-Builder
-          cd RvLProMaster-Builder
+          mkdir -p buildir
+          cd buildir
 
           # Condition PBRP
           if [[ "${{ env.SELECTED_RECOVERY }}" == *"PBRP(Android-12.1)"* ]]; then
@@ -120,7 +120,7 @@ jobs:
           repo sync --force-sync --no-clone-bundle -j$(nproc)
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
           source build/envsetup.sh
-          cd RvLProMaster-Builder
+          cd buildir
           lunch ${{ inputs.MAKEFILE_DT }}_${{ env.DEVICE_CODENAME }}-eng
           mka ${{ env.BUILD_VAR }} -j$(nproc)
 
@@ -130,7 +130,7 @@ jobs:
           repo sync --force-sync --no-clone-bundle -j$(nproc)
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
           source build/envsetup.sh
-          cd RvLProMaster-Builder
+          cd buildir
           lunch ${{ inputs.MAKEFILE_DT }}_${{ env.DEVICE_CODENAME }}-eng
           mka ${{ env.BUILD_VAR }} -j$(nproc)
           fi
@@ -139,8 +139,8 @@ jobs:
         uses: softprops/action-gh-release@master
         with:
             files: |
-              RvLProMaster-Builder/out/target/product/${{ env.DEVICE_CODENAME}}/PBRP*.zip
-              RvLProMaster-Builder/out/target/product/${{ env.DEVICE_CODENAME}}/boot.img
+              buildir/out/target/product/${{ env.DEVICE_CODENAME}}/PBRP*.zip
+              buildir/out/target/product/${{ env.DEVICE_CODENAME}}/boot.img
             name: "Result Build For Device: ${{ env.DEVICE_CODENAME}}"
             tag_name: ${{ github.run_id }}
             body: |
