@@ -39,9 +39,26 @@ on:
       MAKEFILE_DT:
         description: "Specify Your Device Tree Makefile(example: twrp_codename)But You No Need Insert Again _codename"
         required: true
-      CCACHE_SIZE_INPUT:
-        description: "Enter Size CCACHE Your Wants"
+      INPUT_SIZE_CCACHE:
+        description: 'Select Your Size Ccache'
         required: true
+        type: choice
+        options:
+            - '8'
+            - '9'
+            - '10'
+            - '11'
+            - '12'
+      INPUT_SIZE_SWAP:
+        description: 'Select Your Want Swap'
+        required: true
+        type: choice
+        options:
+            - '8'
+            - '9'
+            - '10'
+            - '11'
+            - '12'
 jobs:
   build:
     name: "Building: ${{ inputs.SELECT_RECOVERY }}"
@@ -75,10 +92,10 @@ jobs:
       - name: Cleanup Disk
         uses: rokibhasansagar/slimhub_actions@main
 
-      - name: Set Swap To 4GB
+      - name: Set Swap
         uses: pierotofy/set-swap-space@master
         with:
-            swap-size-gb: 4
+            swap-size-gb: ${{ inputs.INPUT_SIZE_SWAP }}
 
       - name: Setting ccache
         uses: actions/cache@v3
