@@ -41,6 +41,8 @@ jobs:
   build:
     name: "Building Recovery: ${{ inputs.SELECT_RECOVERY }}"
     runs-on: ubuntu-latest
+    permissions:
+        contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -52,6 +54,14 @@ jobs:
           echo "Build Variant: ${{ inputs.BUILD_VARIANT }}"
           echo "Device Tree URL: ${{ inputs.DT_RECOVERY_URL }}"
           echo "Device Tree Branch: ${{ inputs.DT_RECOVERY_BRANCH }}"
+          
+      - name: Cleanup Disk
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Set Swap To 4GB
+        uses: pierotofy/set-swap-space@master
+        with:
+            swap-size-gb: 4
 
       - name: Display System Information
         run: |
