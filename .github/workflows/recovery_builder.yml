@@ -131,12 +131,14 @@ jobs:
         run: |
           # Condition PBRP
           if [[ "${{ env.SELECTED_RECOVERY }}" == *"PBRP(Android-12.1)"* ]]; then
+          cd buildir
           source build/envsetup.sh
           lunch ${{ inputs.MAKEFILE_DT }}_${{ env.DEVICE_CODENAME }}-eng
           mka ${{ env.BUILD_VAR }} -j$(nproc)
 
           # Condition TWRP
           elif [[ "${{ env.SELECTED_RECOVERY }}" == *"TWRP(twrp-12.1)"* ]]; then
+          cd buildir
           source build/envsetup.sh
           lunch ${{ inputs.MAKEFILE_DT }}_${{ env.DEVICE_CODENAME }}-eng
           mka ${{ env.BUILD_VAR }} -j$(nproc)
