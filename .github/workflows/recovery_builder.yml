@@ -189,9 +189,8 @@ jobs:
              Target Recovery: ${{ env.SELECTED_RECOVERY }}
              Device Tree: ${{ env.DT_LINK }}
              Device Branch: ${{ env.DT_BRANCH }}
-             Device Tree Last Commit: ${{ env.DT_LINK }}/commit/$(git -C device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME }} rev-parse HEAD)
+             Device Tree Last Commit: ${{ env.DT_LINK }}/commit/$(git -C buildir/device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME }} rev-parse HEAD)
              Device Codename: ${{ env.DEVICE_CODENAME }}
              Device Brands: ${{ env.DEVICE_BRAND }}
              Build Variant: ${{ env.BUILD_VAR }}
              Requested Build By: ${{ github.actor }}
-             Build Done At: ${{ github.job}}
