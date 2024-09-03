@@ -89,7 +89,6 @@ jobs:
         DT_BRANCH: ${{ inputs.DT_RECOVERY_BRANCH }}
         PBRP_ANDROID_12_URL: "https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1"
         TWRP_TWRP_12_URL: "https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1"
-        LAST_DT_COMMIT: "${{ inputs.DT_RECOVERY_URL }}/commit/$(git -C /device/${{ inputs.SELECT_BRAND }}/${{ inputs.CODENAME }} rev-parse HEAD)"
 
     permissions:
         contents: write
@@ -147,12 +146,14 @@ jobs:
           repo init -u ${{ env.PBRP_ANDROID_12_URL }}
           repo sync --force-sync --no-clone-bundle -j$(nproc)
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
+          export DT_PATH="${{ env.DT_LINK }}/commit/$(git -C /device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME }} rev-parse HEAD)"
 
           # Condition TWRP
           elif [[ "${{ env.SELECTED_RECOVERY }}" == *"TWRP(twrp-12.1)"* ]]; then
           repo init -u ${{ env.TWRP_TWRP_12_URL }}
           repo sync --force-sync --no-clone-bundle -j$(nproc)
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
+          export DT_PATH="${{ env.DT_LINK }}/commit/$(git -C /device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME }} rev-parse HEAD)"
           fi
 
       - name: Build Recovery
@@ -192,7 +193,7 @@ jobs:
              Target Recovery: ${{ env.SELECTED_RECOVERY }}
              Device Tree: ${{ env.DT_LINK }}
              Device Branch: ${{ env.DT_BRANCH }}
-             Device Tree Last Commit: ${{ env.LAST_DT_COMMIT }}
+             Device Tree Last Commit: "${DT_PATH}"
              Device Codename: ${{ env.DEVICE_CODENAME }}
              Device Brands: ${{ env.DEVICE_BRAND }}
              Build Variant: ${{ env.BUILD_VAR }}
