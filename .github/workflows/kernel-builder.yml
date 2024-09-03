@@ -30,7 +30,7 @@ on:
 jobs:
   build:
     name: "Building Kernel For ${{ inputs.CODENAME}} From Defconfig: ${{ inputs.DEFCONFIG }}"
-    runs-on: ubuntu-jammy
+    runs-on: ubuntu-latest
     env:
         TELEGRAM_BOT_TOKEN: ${{ inputs.TELEGRAM_BOT_TOKEN }}
         DEFCONFIG: ${{ inputs.DEFCONFIG }}
