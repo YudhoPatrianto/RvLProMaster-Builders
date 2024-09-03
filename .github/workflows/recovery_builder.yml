@@ -89,7 +89,7 @@ jobs:
         DT_BRANCH: ${{ inputs.DT_RECOVERY_BRANCH }}
         PBRP_ANDROID_12_URL: "https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1"
         TWRP_TWRP_12_URL: "https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1"
-        LAST_DT_COMMIT: "${{ env.DT_LINK }}/commit/$(git -C /device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}} rev-parse HEAD)"
+        LAST_DT_COMMIT: "${{ inputs.DT_RECOVERY_URL }}/commit/$(git -C /device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}} rev-parse HEAD)"
 
     permissions:
         contents: write
