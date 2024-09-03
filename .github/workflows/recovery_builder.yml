@@ -84,6 +84,11 @@ on:
             - TEST
             - EXPERIMENT
             - STABLE
+      TELEGRAMBOT_TOKEN:
+        description: "Insert Your Token Of Telegram BOT In Here"
+      CHATID_SEND:
+        description: "Insert Your Chat ID Want's To Send Notification In Here"
+        required: true
 jobs:
   build:
     name: "Building: ${{ inputs.SELECT_RECOVERY }}"
@@ -99,6 +104,8 @@ jobs:
         PBRP_ANDROID_12_URL: "https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1"
         TWRP_TWRP_12_URL: "https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1"
         STATUS_BUILD: ${{ inputs.STATUS_BUILD }}
+        TOKEN: ${{ inputs.TELEGRAMBOT_TOKEN }}
+        CHATID: ${{ inputs.CHATID_SEND }}
     permissions:
         contents: write
     steps:
@@ -120,17 +127,6 @@ jobs:
         uses: pierotofy/set-swap-space@master
         with:
             swap-size-gb: ${{ inputs.INPUT_SIZE_SWAP }}
-
-      - name: Display System Information
-        run: |
-          echo "OS: $(lsb_release -a 2>/dev/null | awk '/Description/ {print $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}')"
-          echo "Users $(whoami)"
-          echo "Kernel Version: $(uname -r)"
-          echo "CPU: $(lscpu | grep 'Model name' | awk -F: '{print $2}' | xargs)"
-          echo "CPU Cores: $(nproc) Cores"
-          echo "Total Memory Size: $(free -h | awk '/^Mem:/ {print $4}')"
-          echo "Total Swap Size: $(free -h | awk '/^Swap:/ {print $2}')"
-          echo "Total Free Disk: $(df -h $(pwd) | awk 'NR==2 {print $4}')"
 
       - name: Install Depencies Needed
         run: |
@@ -163,7 +159,14 @@ jobs:
           git clone ${{ inputs.DT_RECOVERY_URL }} -b ${{ inputs.DT_RECOVERY_BRANCH }} device/${{ env.DEVICE_BRAND }}/${{ env.DEVICE_CODENAME}}
           fi
 
-      - name: Build Recovery
+      - name: Alert To Telegram BOT
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ env.TOKEN }}/sendMessage" \
+          -d chat_id=${{ env.CHATID }} \
+          -d "text=*Building* ``${{ env.SELECTED_RECOVERY }}`` *By* ``${{ github.actor }}`` *Is Started*" \
+          -d parse_mode="Markdown"
+
+      - name: Building Recovery
         run: |
           # Condition PBRP
           if [[ "${{ env.SELECTED_RECOVERY }}" == *"PBRP(Android-12.1)"* ]]; then
