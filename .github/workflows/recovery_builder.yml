@@ -182,6 +182,8 @@ jobs:
         with:
             files: |
               buildir/out/target/product/${{ env.DEVICE_CODENAME}}/PBRP*.zip
+              buildir/out/target/product/${{ env.DEVICE_CODENAME}}/twrp-installer*.zip
+              buildir/out/target/product/${{ env.DEVICE_CODENAME}}/*.zip
               buildir/out/target/product/${{ env.DEVICE_CODENAME}}/boot.img
             name: "Result Build For Device: ${{ env.DEVICE_CODENAME}}"
             tag_name: ${{ github.run_id }}
