@@ -75,6 +75,15 @@ on:
             - '10'
             - '11'
             - '12'
+      STATUS_BUILD:
+        description: 'Select Your Status Build'
+        required: true
+        default: bootimage
+        type: choice
+        options:
+            - TEST
+            - EXPERIMENT
+            - STABLE
 jobs:
   build:
     name: "Building: ${{ inputs.SELECT_RECOVERY }}"
@@ -89,7 +98,7 @@ jobs:
         DT_BRANCH: ${{ inputs.DT_RECOVERY_BRANCH }}
         PBRP_ANDROID_12_URL: "https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1"
         TWRP_TWRP_12_URL: "https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1"
-
+        STATUS_BUILD: ${{ inputs.STATUS_BUILD }}
     permissions:
         contents: write
     steps:
@@ -187,9 +196,10 @@ jobs:
               buildir/out/target/product/${{ env.DEVICE_CODENAME}}/twrp-installer*.zip
               buildir/out/target/product/${{ env.DEVICE_CODENAME}}/*.zip
               buildir/out/target/product/${{ env.DEVICE_CODENAME}}/boot.img
-            name: "Result Build For Device: ${{ env.DEVICE_CODENAME}}"
+            name: "${{ env.STATUS_BUILD }} Build By ${{ github.actor }}"
             tag_name: ${{ github.run_id }}
             body: |
+             Status Build: ${{ env.STATUS_BUILD }}
              Target Recovery: ${{ env.SELECTED_RECOVERY }}
              Device Tree: ${{ env.DT_LINK }}
              Device Branch: ${{ env.DT_BRANCH }}
