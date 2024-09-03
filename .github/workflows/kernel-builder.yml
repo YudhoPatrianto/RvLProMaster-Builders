@@ -73,7 +73,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get upgrade -y
-          sudo apt-get install python3 python2 make gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev -y
+          sudo apt-get install install bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev -y
 
       - name: Creating Folder Directory
         run: |
