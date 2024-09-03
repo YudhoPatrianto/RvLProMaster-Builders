@@ -78,7 +78,7 @@ on:
       STATUS_BUILD:
         description: 'Select Your Status Build'
         required: true
-        default: bootimage
+        default: STABLE
         type: choice
         options:
             - TEST
