@@ -199,12 +199,12 @@ jobs:
             name: "${{ env.STATUS_BUILD }} Build By ${{ github.actor }}"
             tag_name: ${{ github.run_id }}
             body: |
-             Status Build: ${{ env.STATUS_BUILD }}
-             Target Recovery: ${{ env.SELECTED_RECOVERY }}
-             Device Tree: ${{ env.DT_LINK }}
-             Device Branch: ${{ env.DT_BRANCH }}
-             Device Tree Last Commit: "${DT_PATH}"
-             Device Codename: ${{ env.DEVICE_CODENAME }}
-             Device Brands: ${{ env.DEVICE_BRAND }}
-             Build Variant: ${{ env.BUILD_VAR }}
-             Requested Build By: ${{ github.actor }}
+              Status Build: ${{ env.STATUS_BUILD }}
+              Target Recovery: ${{ env.SELECTED_RECOVERY }}
+              Device Tree: ${{ env.DT_LINK }}
+              Device Branch: ${{ env.DT_BRANCH }}
+              Device Tree Last Commit: "${DT_PATH}"
+              Device Codename: ${{ env.DEVICE_CODENAME }}
+              Device Brands: ${{ env.DEVICE_BRAND }}
+              Build Variant: ${{ env.BUILD_VAR }}
+              Requested Build By: ${{ github.actor }}
