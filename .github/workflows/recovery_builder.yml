@@ -39,32 +39,6 @@ on:
       MAKEFILE_DT:
         description: "Specify Your Device Tree Makefile(example: twrp_codename)But You No Need Insert Again _codename"
         required: true
-      INPUT_SIZE_CCACHE:
-        description: 'Select Your Size Ccache'
-        required: true
-        type: choice
-        options:
-            - '10'
-            - '11'
-            - '12'
-            - '13'
-            - '14'
-            - '15'
-            - '16'
-            - '17'
-            - '18'
-            - '19'
-            - '20'
-            - '21'
-            - '22'
-            - '23'
-            - '24'
-            - '25'
-            - '26'
-            - '27'
-            - '28'
-            - '29'
-            - '30'
       STATUS_BUILD:
         description: 'Select Your Status Build'
         required: true
@@ -129,7 +103,7 @@ jobs:
           export USE_CCACHE=1
           export CC='ccache gcc'
           export CXX='ccache g++'
-          ccache -M ${{ inputs.INPUT_SIZE_CCACHE }}G
+          ccache -M 12G
 
       - name: Sync Recovery And Device Tree
         run: |
