@@ -65,16 +65,6 @@ on:
             - '28'
             - '29'
             - '30'
-      INPUT_SIZE_SWAP:
-        description: 'Select Your Want Swap'
-        required: true
-        type: choice
-        options:
-            - '8'
-            - '9'
-            - '10'
-            - '11'
-            - '12'
       STATUS_BUILD:
         description: 'Select Your Status Build'
         required: true
@@ -126,7 +116,7 @@ jobs:
       - name: Set Swap
         uses: pierotofy/set-swap-space@master
         with:
-            swap-size-gb: ${{ inputs.INPUT_SIZE_SWAP }}
+            swap-size-gb: 12
 
       - name: Install Depencies Needed
         run: |
