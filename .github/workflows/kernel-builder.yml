@@ -123,6 +123,7 @@ jobs:
 
       - name: Building Kernel
         run: |
+          ls
           cd workdir/builder-kernel
           echo "Current Directory $(pwd)"
           export KBUILD_BUILD_USER=${{ env.USERNAME }}
