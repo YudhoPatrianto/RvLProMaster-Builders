@@ -119,6 +119,7 @@ jobs:
           tar -xvf rastamod20.tar.gz
           rm -rf rastamod20.tar.gz
           cd ../
+          fi
 
       - name: Building Kernel
         run: |
