@@ -1,0 +1,68 @@
+name: Kernel Builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      SELECT_CLANG:
+        description: 'Choose Your Clang'
+        required: true
+        default: "ZYC Clang 20"
+        type: choice
+        options:
+          - "ZYC Clang 20"
+          - "WeebX Clang-Latest"
+          - "Rastamod69 Clang-20"
+      DEFCONFIG:
+        description: "Insert Your Name Defconfig In Here"
+        required:  true
+      TELEGRAM_BOT_TOKEN:
+        description: "Insert Your Telegram BOT Token In Here"
+        required:  true
+      CODENAME:
+        description: "Insert Your Codename Phone In Here"
+        required:  true
+      KERNEL_SOURCE:
+        description: "Insert Your Repository Kernel In Here"
+        required:  true
+      KERNEL_BRANCH:
+        description: "Insert Branch Of Your Kernel From Repository In Here"
+        required: true
+jobs:
+  build:
+    name: "Building Kernel For ${{ inputs.CODENAME}} From Defconfig: ${{ inputs.DEFCONFIG }}"
+    runs-on: debian-latest
+    env:
+        TELEGRAM_BOT_TOKEN: ${{ inputs.TELEGRAM_BOT_TOKEN }}
+        DEFCONFIG: ${{ inputs.DEFCONFIG }}
+        CODENAME: ${{ inputs.CODENAME }}
+        CLANG: ${{ inputs.SELECT_CLANG }}
+        KERNEL_SOURCE: ${{ inputs.KERNEL_SOURCE }}
+        KERNEL_BRANCH: ${{ inputs.KERNEL_BRANCH }}
+    permissions:
+        contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display All Information
+        run: |
+          echo "Codename: ${{ env.CODENAME }}"
+          echo "Defconfig: ${{ env.DEFCONFIG }}"
+          echo "Clang: ${{ env.CLANG }}"
+          echo "Kernel URL: ${{ env.KERNEL_SOURCE }}"
+          echo "Kernel Branch: ${{ env.KERNEL_BRANCH }}"
+
+          
+      - name: Cleanup Disk
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Set Swap
+        uses: pierotofy/set-swap-space@master
+        with:
+            swap-size-gb: 12
+
+      - name: Installing Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade -y
+          sudo apt install -y sudo apt-get install python3 make gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev -y
